@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndiaPulse News - Live Interface Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            color: #2c3e50;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .navbar-right button {
+            background: #ff9800;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .navbar-right button:hover {
+            background: #fb8c00;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* SECTION */
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .section-subtitle {
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        /* NEWS GRID */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-source {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+        }
+
+        .news-desc {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .read-more {
+            color: #3498db;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* STATES GRID */
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .state-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: #2c3e50;
+        }
+
+        .state-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .state-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .state-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .state-card p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* CATEGORIES */
+        .categories-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .category-item {
+            background: white;
+            padding: 2rem 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .category-item span {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-item h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .states-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .categories-preview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+
+        .demo-notice {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            color: #856404;
+        }
+
+        .demo-notice strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <h1>📰 IndiaPulse</h1>
+        <div class="navbar-right">
+            <span>Logged in: Talari Nithin</span>
+            <button>LOGOUT</button>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>📰 IndiaPulse News</h1>
+        <p>Your Daily Source for India's Top Stories</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- DEMO NOTICE -->
+        <div class="demo-notice">
+            <strong>⚠️ INTERFACE PREVIEW</strong>
+            The React app is loading. This is a preview of what the actual app looks like. Your live app should be at <code>http://localhost:3000</code>
+        </div>
+
+        <!-- NEWS SECTION -->
+        <section class="section">
+            <h2>📢 Top News Across India</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">📰</div>
+                    <div class="news-content">
+                        <div class="news-source">Source: BBC News • 2 hours ago</div>
+                        <div class="news-title">Breaking: Major Political News from Delhi</div>
+                        <div class="news-desc">India has made a record-breaking achievement in recent developments...</div>
+                        <a href="#" class="read-more">Read More ▶</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">🏅</div>
+                    <div class="news-content">
+                        <div class="news-source">Source: CNN • 1 hour ago</div>
+                        <div class="news-title">India Wins Gold Medal in Olympics</div>
+                        <div class="news-desc">The Indian athlete made an outstanding performance at the international level...</div>
+                        <a href="#" class="read-more">Read More ▶</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">💻</div>
+                    <div class="news-content">
+                        <div class="news-source">Source: TechNews • 45 minutes ago</div>
+                        <div class="news-title">New Technology Innovation in India</div>
+                        <div class="news-desc">Indian tech companies are leading the innovation in the digital space...</div>
+                        <a href="#" class="read-more">Read More ▶</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">⚽</div>
+                    <div class="news-content">
+                        <div class="news-source">Source: Sports Today • 30 minutes ago</div>
+                        <div class="news-title">Cricket: India Wins Match</div>
+                        <div class="news-desc">The Indian cricket team achieved a historic victory in today's match...</div>
+                        <a href="#" class="read-more">Read More ▶</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">🌤️</div>
+                    <div class="news-content">
+                        <div class="news-source">Source: Weather Channel • 20 minutes ago</div>
+                        <div class="news-title">Weather Update for Major Cities</div>
+                        <div class="news-desc">Monsoon patterns are changing across different regions of India...</div>
+                        <a href="#" class="read-more">Read More ▶</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">💼</div>
+                    <div class="news-content">
+                        <div class="news-source">Source: Business India • 15 minutes ago</div>
+                        <div class="news-title">Stock Market Hits New High</div>
+                        <div class="news-desc">Indian stock market recorded another milestone in today's trading session...</div>
+                        <a href="#" class="read-more">Read More ▶</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATES SECTION -->
+        <section class="section">
+            <h2>🗺️ Select Your State</h2>
+            <p class="section-subtitle">Choose a state to view news from your region</p>
+            <div class="states-grid">
+                <div class="state-card">
+                    <div class="state-icon">📍</div>
+                    <h3>Karnataka</h3>
+                    <p>View news</p>
+                </div>
+                <div class="state-card">
+                    <div class="state-icon">📍</div>
+                    <h3>Maharashtra</h3>
+                    <p>View news</p>
+                </div>
+                <div class="state-card">
+                    <div class="state-icon">📍</div>
+                    <h3>Delhi</h3>
+                    <p>View news</p>
+                </div>
+                <div class="state-card">
+                    <div class="state-icon">📍</div>
+                    <h3>Tamil Nadu</h3>
+                    <p>View news</p>
+                </div>
+                <div class="state-card">
+                    <div class="state-icon">📍</div>
+                    <h3>Kerala</h3>
+                    <p>View news</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORIES SECTION -->
+        <section class="section">
+            <h2>📂 News Categories</h2>
+            <div class="categories-preview">
+                <div class="category-item">
+                    <span>📰</span>
+                    <h4>Headlines</h4>
+                </div>
+                <div class="category-item">
+                    <span>⚽</span>
+                    <h4>Sports</h4>
+                </div>
+                <div class="category-item">
+                    <span>💻</span>
+                    <h4>Technology</h4>
+                </div>
+                <div class="category-item">
+                    <span>🚨</span>
+                    <h4>Crime</h4>
+                </div>
+                <div class="category-item">
+                    <span>💼</span>
+                    <h4>Business</h4>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>
+            <a href="#">📧 Contact</a> |
+            <a href="#">🔗 About</a> |
+            <a href="#">📋 Terms</a> |
+            <a href="#">🔒 Privacy</a> |
+            <a href="#">🎯 Help</a>
+        </p>
+        <p style="margin-top: 1rem; opacity: 0.7;">
+            © 2025 IndiaPulse News. All rights reserved.
+        </p>
+    </div>
+</body>
+</html>
